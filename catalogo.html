@@ -8,6 +8,19 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Tu archivo CSS -->
     <link href="css/styles.css" rel="stylesheet">
+    <script>
+      function addToCart(productName, imageUrl, price) {
+          // Recupera los productos del carrito del localStorage
+          var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+          // Agrega el nuevo producto al carrito
+          cartItems.push({ productName: productName, imageUrl: imageUrl, price: price });
+          // Guarda los productos actualizados en el localStorage
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          // Redirige al usuario a la página del carrito
+          window.location.href = 'carrito.html';
+      }
+  </script>
+  
 </head>
 <body>
 <!-- Navbar -->
@@ -83,7 +96,7 @@
   
         <ul class="navbar-nav ms-3">
           <li class="nav-item me-3">
-            <a class="nav-link d-flex align-items-center" href="index.html">IMDbPro</a> 
+            <a class="nav-link d-flex align-items-center" href="carrito.html">Carrito</a> 
           </li>
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center me-3" href="register.html">
@@ -107,25 +120,25 @@
         <div class="row mt-3">
             <!-- Vehículo 1 -->
             <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <img src="assets/slide1.jpg" class="card-img-top" alt="Vehículo 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Vehículo 1</h5>
-                        <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
-                    </div>
-                </div>
+              <div class="card">
+                  <img src="assets/slide1.jpg" class="card-img-top" alt="Vehículo 1">
+                  <div class="card-body">
+                      <h5 class="card-title">Vehículo 1</h5>
+                      <p class="card-text">Descripción del vehículo.</p>
+                      <p class="card-text">Precio: $27.000/HR</p>
+                      <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 1', 'assets/slide1.jpg', '27000')">Agregar al Carrito</a>
+                  </div>
+              </div>
             </div>
             <!-- Vehículo 2 -->
             <div class="col-lg-4 mb-4">
                 <div class="card">
                     <img src="assets/slide2.jpg" class="card-img-top" alt="Vehículo 1">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 1</h5>
+                        <h5 class="card-title">Vehículo 2</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $28.000/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 2', 'assets/slide2.jpg', '28000')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -134,10 +147,10 @@
                 <div class="card">
                     <img src="assets/slide3.jpg" class="card-img-top" alt="Vehículo 1">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 1</h5>
+                        <h5 class="card-title">Vehículo 3</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $32.000/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 3', 'assets/slide3.jpg', '32000')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -146,10 +159,10 @@
                 <div class="card">
                     <img src="assets/vehiculo4.jpg" class="card-img-top" alt="Vehículo 1">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 1</h5>
+                        <h5 class="card-title">Vehículo 4</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $33.000/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 4', 'assets/vehiculo4.jpg', '33000')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -158,10 +171,10 @@
                 <div class="card">
                     <img src="assets/vehiculo5.jpg" class="card-img-top" alt="Vehículo 1">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 1</h5>
+                        <h5 class="card-title">Vehículo 5</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $34.500/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 5', 'assets/vehiculo5.jpg', '34500')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -170,10 +183,10 @@
                 <div class="card">
                     <img src="assets/vehiculo6.jpg" class="card-img-top" alt="Vehículo 2">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 2</h5>
+                        <h5 class="card-title">Vehículo 6</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $37.500/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 6', 'assets/vehiculo6.jpg', '37500')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -182,10 +195,10 @@
                 <div class="card">
                     <img src="assets/vehiculo7.jpg" class="card-img-top" alt="Vehículo 3">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 3</h5>
+                        <h5 class="card-title">Vehículo 7</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $34.500/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 7', 'assets/vehiculo7.jpg', '34500')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -194,10 +207,10 @@
                 <div class="card">
                     <img src="assets/vehiculo8.jpg" class="card-img-top" alt="Vehículo 2">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 2</h5>
+                        <h5 class="card-title">Vehículo 8</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $22.000/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 8', 'assets/vehiculo8.jpg', '22000')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
@@ -206,16 +219,32 @@
                 <div class="card">
                     <img src="assets/vehiculo9.jpg" class="card-img-top" alt="Vehículo 2">
                     <div class="card-body">
-                        <h5 class="card-title">Vehículo 2</h5>
+                        <h5 class="card-title">Vehículo 9</h5>
                         <p class="card-text">Descripción del vehículo.</p>
-                        <p class="card-text">Precio: $25.000/HR</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        <p class="card-text">Precio: $35.500/HR</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('Vehículo 9', 'assets/vehiculo9.jpg', '35500')">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>
             <!-- Puedes agregar más vehículos siguiendo la misma estructura -->
         </div>
     </div>
+
+            <!-- Footer-->
+            <footer class="bg-white py-4 mt-auto">
+              <div class="container px-5">
+                  <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                      <div class="col-auto"><div class="small m-0">Copyright &copy; SCatalan2024</div></div>
+                      <div class="col-auto">
+                          <a class="small" href="#!">Privacidad</a>
+                          <span class="mx-1">&middot;</span>
+                          <a class="small" href="#!">Terminos</a>
+                          <span class="mx-1">&middot;</span>
+                          <a class="small" href="#!">Contacto</a>
+                      </div>
+                  </div>
+              </div>
+          </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

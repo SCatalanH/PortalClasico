@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tu archivo CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- Container wrapper -->
+        <div class="container">
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="index.html"><img id="MDB-logo" src="assets/profile.png" alt="MDB Logo" draggable="false" height="30" /></a>
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Content -->
+    <div class="container mt-5">
+        <h1>Carrito de Compras</h1>
+        <div class="row mt-3" id="cartItemsContainer">
+            <!-- Aquí se mostrarán los productos del carrito -->
+        </div>
+        <!-- Total del costo -->
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total del Costo</h5>
+                <p class="card-text">El total del costo de los coches en el carrito es: <span id="totalCost"></span></p>
+                <button class="btn btn-success" onclick="pagar()">Pagar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para mostrar los productos del carrito
+        function showCartItems() {
+            // Recupera los productos del carrito del localStorage
+            var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            // Obtiene el contenedor donde se mostrarán los productos del carrito
+            var cartItemsContainer = document.getElementById('cartItemsContainer');
+            // Limpia cualquier contenido previo en el contenedor
+            cartItemsContainer.innerHTML = '';
+            // Itera sobre cada producto en el carrito y los agrega al contenedor
+            cartItems.forEach(function(item) {
+                var cardDiv = document.createElement('div');
+                cardDiv.classList.add('col-lg-4');
+                cardDiv.innerHTML = `
+                    <div class="card">
+                        <img src="${item.imageUrl}" class="card-img-top" alt="${item.productName}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.productName}</h5>
+                            <p class="card-text">Descripción del producto.</p>
+                            <p class="card-text">$${item.price}/HR</p>
+                            <a href="#" class="btn btn-primary" onclick="removeFromCart('${item.productName}')">Eliminar del Carrito</a>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cardDiv);
+            });
+        }
+
+         // Función para eliminar un producto del carrito
+    function removeFromCart(productName) {
+        // Recupera los productos del carrito del localStorage
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // Filtra el producto que se va a eliminar del carrito
+        cartItems = cartItems.filter(function(item) {
+            return item.productName !== productName;
+        });
+        // Guarda los productos actualizados en el localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        // Actualiza la visualización del carrito
+        showCartItems();
+    }
+
+        // Muestra los productos del carrito cuando la página se carga
+        showCartItems();
+    </script>
+    <script>
+    function showTotalCost() {
+        // Recupera los productos del carrito del localStorage
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // Inicializa el total del costo
+        var totalCost = 0;
+        // Calcula el total del costo sumando el precio de cada producto en el carrito
+        cartItems.forEach(function(item) {
+            totalCost += parseFloat(item.price);
+        });
+        // Muestra el total del costo en la página
+        document.getElementById('totalCost').textContent = '$' + totalCost.toFixed(2);
+    }
+
+    // Función para pagar
+    function pagar() {
+        alert('¡Gracias por tu compra!');
+        localStorage.removeItem('cartItems');
+        // Redirecciona a la página de inicio
+        window.location.href = 'index.html';
+    }
+
+    // Llama a la función showTotalCost al cargar la página
+    showTotalCost();
+</script>
+
+</body>
+</html>
