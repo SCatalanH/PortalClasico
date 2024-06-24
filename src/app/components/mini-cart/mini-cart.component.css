@@ -1,0 +1,22 @@
+.mini-cart {
+    position: fixed;
+    right: 20px;
+    top: 50px;
+    width: 200px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  
+    li {
+      margin-bottom: 10px;
+      button {
+        margin-left: 10px;
+      }
+    }
+  }

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from '../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'],
+  imports: [NavbarComponent]  // Agrega NavbarComponent aquí
 })
-export class HeaderComponent {
-
-}
+export class HeaderComponent { }
