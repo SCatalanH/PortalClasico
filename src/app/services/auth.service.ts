@@ -31,15 +31,17 @@ export class AuthService {
       tap((response: any) => {
         if (this.isBrowser) {
           const token = response.token;
-          console.log('Token received:', token); // Verifica que el token se recibe
+          console.log('Token received:', token);
           const decodedUser = this.decodeToken(token);
-          console.log('Decoded user:', decodedUser); // Verifica el usuario decodificado
+          console.log('Decoded user:', decodedUser);
           localStorage.setItem('token', token);
           this.currentUserSubject.next(decodedUser);
         }
       })
     );
   }
+  
+  
 
   isAuthenticated(): boolean {
     return this.isBrowser ? !!localStorage.getItem('token') : false;
@@ -59,8 +61,8 @@ export class AuthService {
   private decodeToken(token: string): any {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Decoded payload:', payload); // Verifica el contenido del token
-      return payload.user; // Asegúrate de que 'user' contiene 'username'
+      console.log('Decoded payload:', payload);
+      return payload.user; // Asegúrate de que 'user' contiene 'username' y 'role'
     } catch (e) {
       console.error('Error decoding token:', e);
       return null;

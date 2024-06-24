@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server error');
   }
 });
@@ -15,12 +16,26 @@ router.get('/', async (req, res) => {
 // Ruta para eliminar un usuario
 router.delete('/:id', async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
-    res.json({ msg: 'User deleted' });
+    await User.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'User removed' });
   } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Ruta para actualizar el rol de un usuario
+router.put('/role/:id', async (req, res) => {
+  const { role } = req.body;
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+
+    user.role = role;
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server error');
   }
 });

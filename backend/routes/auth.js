@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body; // Asegúrate de que username y email se reciben
+  const { username, email, password } = req.body;
   try {
-    let user = new User({ username, email, password });
+    let user = new User({ username, email, password, role: 'user' });
     await user.save();
-    const payload = { user: { id: user.id, username: user.username } }; // Incluye el username en el payload
+    const payload = { user: { id: user.id, role: user.role } };
     jwt.sign(payload, 'yourSecretKey', { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
       res.json({ token });
@@ -21,9 +21,9 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body; // Cambiado a email
+  const { email, password } = req.body;
   try {
-    let user = await User.findOne({ email }); // Busca por email
+    let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-    const payload = { user: { id: user.id, username: user.username } }; // Incluye el username en el payload
+    const payload = { user: { id: user.id, role: user.role } };
     jwt.sign(payload, 'yourSecretKey', { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
       res.json({ token });
