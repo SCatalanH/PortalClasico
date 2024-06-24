@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.css'
+  styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
   product?: Product;
@@ -17,12 +17,14 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const productId = +params['id']; // Convert string to number
-      this.product = this.productService.getProductById(productId);
+      const productId = +params['id']; // Convertir string a número
+      this.productService.getProductById(productId).subscribe(product => {
+        this.product = product;
+      });
     });
   }
 }
