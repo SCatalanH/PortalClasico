@@ -20,6 +20,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// routes/auth.js
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -31,7 +32,7 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-    const payload = { user: { id: user.id, role: user.role } };
+    const payload = { user: { id: user.id, username: user.username, role: user.role } };
     jwt.sign(payload, 'yourSecretKey', { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
       res.json({ token });
@@ -41,5 +42,5 @@ router.post('/login', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
 module.exports = router;
+    

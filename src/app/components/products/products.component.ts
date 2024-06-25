@@ -13,7 +13,7 @@ import { Product } from '../../product.model';
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
-  newProduct: Product = { id: 0, name: '', description: '', price: 0, imageUrl: '' };
+  newProduct: Product = { id: '', name: '', description: '', price: 0, imageUrl: '' };
 
   constructor(private productService: ProductService) {}
 
@@ -25,14 +25,22 @@ export class ProductsComponent implements OnInit {
     this.productService.getProducts().subscribe(products => this.products = products);
   }
 
-  deleteProduct(productId: number): void {
-    this.productService.deleteProduct(productId).subscribe(() => this.loadProducts());
-  }
+
 
   addProduct(): void {
     this.productService.addProduct(this.newProduct).subscribe(() => {
       this.loadProducts();
-      this.newProduct = { id: 0, name: '', description: '', price: 0, imageUrl: '' };
+      this.newProduct = { id: '', name: '', description: '', price: 0, imageUrl: '' };
+
+  
+  
+    });
+  }
+
+  deleteProduct(id: string): void {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.products = this.products.filter(product => product.id !== id);
     });
   }
 }
+

@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Edit Profile</h3>
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+              <div class="form-group mb-3">
+                <label for="username">Username</label>
+                <input type="text" id="username" formControlName="username" class="form-control">
+                <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="text-danger">
+                  Username is required
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" class="form-control">
+                <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="text-danger">
+                  <div *ngIf="profileForm.get('email')?.errors?.['required']">Email is required</div>
+                  <div *ngIf="profileForm.get('email')?.errors?.['email']">Enter a valid email</div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

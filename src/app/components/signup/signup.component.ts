@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -12,26 +12,26 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  authService = inject(AuthService);
-  router = inject(Router);
-
-  signupForm = new FormGroup({
+  registerForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
+    ])
   });
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   onSubmit() {
-    if (this.signupForm.valid) {
-      const username = this.signupForm.get('username')?.value || '';
-      const email = this.signupForm.get('email')?.value || '';
-      const password = this.signupForm.get('password')?.value || '';
-      this.authService.register({ username, email, password })
-        .subscribe((data: any) => {
-          this.router.navigate(['/login']);
-        }, error => {
-          console.error(error);
-        });
+    if (this.registerForm.valid) {
+      const { username, email, password } = this.registerForm.value;
+      this.authService.register({ 
+        username: username as string, 
+        email: email as string, 
+        password: password as string 
+      }).subscribe(() => this.router.navigate(['/login']));
     }
   }
 }

@@ -24,9 +24,9 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.json({ msg: 'Product deleted' });
+    res.status(200).json({ message: 'Product deleted' });
   } catch (err) {
-    res.status(500).send('Server error');
+    res.status(500).json({ error: err.message });
   }
 });
 

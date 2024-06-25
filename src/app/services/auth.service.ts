@@ -1,3 +1,5 @@
+// auth.service.ts
+
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -31,17 +33,12 @@ export class AuthService {
       tap((response: any) => {
         if (this.isBrowser) {
           const token = response.token;
-          console.log('Token received:', token);
-          const decodedUser = this.decodeToken(token);
-          console.log('Decoded user:', decodedUser);
           localStorage.setItem('token', token);
-          this.currentUserSubject.next(decodedUser);
+          this.currentUserSubject.next(this.decodeToken(token));
         }
       })
     );
   }
-  
-  
 
   isAuthenticated(): boolean {
     return this.isBrowser ? !!localStorage.getItem('token') : false;
@@ -49,6 +46,19 @@ export class AuthService {
 
   getCurrentUser(): Observable<any> {
     return this.currentUserSubject.asObservable();
+  }
+
+  updateProfile(updatedData: { username: string, email: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${this.apiUrl}/update`, updatedData, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).pipe(
+      tap((user: any) => {
+        if (this.isBrowser) {
+          this.currentUserSubject.next(user);
+        }
+      })
+    );
   }
 
   logout(): void {
@@ -61,12 +71,9 @@ export class AuthService {
   private decodeToken(token: string): any {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Decoded payload:', payload);
-      return payload.user; // Asegúrate de que 'user' contiene 'username' y 'role'
+      return payload.user;
     } catch (e) {
-      console.error('Error decoding token:', e);
       return null;
     }
   }
-  
 }
