@@ -15,11 +15,12 @@ router.post('/', async (req, res) => {
   try {
     const newProduct = new Product(req.body);
     const product = await newProduct.save();
-    res.json(product);
+    res.json(product); // Asegúrate de que el objeto completo se devuelve, incluyendo el `id`
   } catch (err) {
     res.status(500).send('Server error');
   }
 });
+
 
 router.delete('/:id', async (req, res) => {
   try {
@@ -29,5 +30,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 module.exports = router;
